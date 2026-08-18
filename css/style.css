@@ -5,6 +5,7 @@
 }
 body {
     font-family: "Poppins", sans-serif;
+    background-color: var(--main-color);
 }
 html {
     scroll-behavior: smooth;
@@ -41,9 +42,16 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 30px; 
+    padding: 20px 80px; 
     font-size: 20px;
     z-index: 1000;
+}
+#menu-icon{
+    color: white;
+    display: none;
+}
+.logo-nav {
+    display: none;
 }
 .main-nav {
     white-space: nowrap;
@@ -57,7 +65,7 @@ header {
 /* end heading */
 /* start main */
 main {
-    padding: 120px 40px 40px;
+    padding: 120px 80px 40px;
     background-color: var(--main-color);
     display: flex;
     justify-content: center;
@@ -92,7 +100,7 @@ main {
 /* start about */
 .about-section {
     background-color: var(--main-color-alt);
-    padding: 40px 40px;
+    padding: 40px 80px;
     color: white;
 }
 .about-flex {
@@ -149,7 +157,7 @@ main {
     justify-content: center;
     max-width: 150px;
     width: 100%;
-
+    filter: brightness(0) invert(1);
 }
 .p-card {
     text-align: center;
@@ -162,52 +170,117 @@ main {
     padding: 40px 40px;
     color: white;
 }
-.project-cards {
-    padding: 30px 30px;
+.project-cards,
+.see-more-project {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap; /* يمنع التمدد الزائد ويوزع الكروت بانتظام */
+    gap: 30px; /* مسافة متناسقة وموحدة بين الكروت */
+    padding: 30px 20px;
+}
+.see-more-project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 30px;
+    transform: translateY(-15px);
+    
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.5s ease,
+                transform 0.5s ease,
+                padding 0.5s ease;
+}
+
+.see-more-project.show {
+    max-height: 1000px; 
+    opacity: 1;
+    padding: 30px 30px;
+    transform: translateY(0);
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);      
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); 
+    }
+}
+.see-more-project.hide {
+    animation: fadeOut .5s ease forwards;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 }
 .card-p {
     background-color: var(--main-color);
-    border-radius: 10px;
+    border-radius: 16px; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 10px 20px;
-    gap: 30px;
-    flex: 1;
+    width: 100%;
+    max-width: 350px; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-p:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+.project-img {
+    width: 100%;
+    height: 190px;
 }
 .project-img img{
-    display: flex;
-    justify-content: center;
-    border-radius: 10px;
+    display: block;
+    border-radius: 16px;
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: .3s;
 }
-.project-img img:hover {
-    transform: scale(1.1);
+.card-p:hover .project-img img {
+    transform: scale(1.08); 
 }
 .project-title {
-    font-size: 28px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 20px;
+    text-align: center;
 }
 .project-btn {
-    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
 }
 .project-btn button {
     background-color: #AD2831;
     color: white;
-    border-radius: 15px;
-    font-size: 22px;
-    margin: 0 20px;
-    padding: 10px 40px;
+    border-radius: 10px;
+    font-size: 16px; 
+    font-weight: 500;
+    padding: 10px 24px;
     border: none;
     cursor: pointer;
-    transition: .3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 .project-btn button:hover {
     background-color: var(--main-color-alt);
-    transform: translateY(-4px);
+    transform: translateY(-2px);
 
 }
 .more-project {
@@ -245,7 +318,7 @@ main {
 }
 .tech-img img {
     padding: 50px;
-    width: 400px;
+    width: 350px;
 }
 /* end tech */
 /* start contact us */
@@ -262,13 +335,23 @@ main {
 }
 
 .contact-img img{
-    width: 300px;
+    width: 350px;
 }
 .send-message {
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 300px;
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+.error-message {
+    color: #ffb3b3;
+    font-size: 13px;
+    display: block;
+    min-height: 16px;
 }
 .send-message input ,
 .send-message textarea {
@@ -279,6 +362,11 @@ main {
     font-family: inherit;
     font-size: 16px;
     resize: none;
+}
+.send-message input:not(:placeholder-shown),
+.send-message textarea:not(:placeholder-shown) {
+    background-color: #f0f0ff;
+    color: #333;
 }
 .send-message input {
     height: 45px;
@@ -363,6 +451,21 @@ main {
     font-size: 13px;
 }
 /* end footer */
+/* js */
+/* 1. الحالة المبدئية لأي عنصر واخد كلاس reveal (مخفي ونازل لتحت) */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 2. الحالة بعد وصول السكرول (يضيفها الـ JS تلقائياً) */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* js */
 @media (max-width: 768px) {
 
     /* ---------- Header ---------- */
@@ -372,16 +475,52 @@ main {
         font-size: 12px;
     }
 
+    header a {
+        padding-left: 20px;
+    }
+
     .logo {
-        font-size: 16px;
+        font-size: 22px;
     }
 
     .main-nav {
+        position: fixed;
+        top: 0;
+        left: -1000px;
+        width: 250px;
+        height: 100vh;
+        background-color: var(--main-color-alt);
+        padding-top: 80px;
+        transition: left .3s ease;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
         gap: 2px;
+        overflow-x: hidden;
+    }
+    #menu-icon {
+        display: block;
+        padding-right: 20px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    .main-nav.active {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    left: 0;
+    }
+    
+    .main-nav.active .logo-nav  {
+    font-size: 28px;
+    font-weight: bold;
+    padding: 25px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .main-nav a {
-        padding: 0 5px;
+    .main-nav.active a {
+        display: block;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
 
@@ -507,20 +646,37 @@ main {
 
     .project-cards {
         flex-direction: column;
-
-        padding: 20px 0;
-
         align-items: center;
+    }
 
+    .see-more-project {
+        flex-direction: column !important;
+        align-items: center;
         gap: 25px;
+        
+        max-height: 0;
+        opacity: 0;
+        padding: 0;
+        overflow: hidden;
+        
+        transition: max-height 0.5s ease-in-out 0.1s, 
+                    opacity 0.3s ease-out,              
+                    padding 0.5s ease-in-out;
+    }
+
+    .see-more-project.show {
+        max-height: 2000px !important;
+        opacity: 1;
+        padding: 20px 0; 
+        transition: max-height 0.5s ease-in-out,
+                    opacity 0.4s ease-in 0.1s,
+                    padding 0.5s ease-in-out;
     }
 
     .card-p {
-        width: 280px;
-
-        flex: none;
-
-        gap: 20px;
+        width: 100%;
+        max-width: 290px;
+        margin: 0 auto;
     }
 
     .project-title {
@@ -646,12 +802,7 @@ main {
     }
 
     .logo {
-        font-size: 14px;
-    }
-
-    .main-nav a {
-        padding: 0 3px;
-        font-size: 10px;
+        font-size: 20px;
     }
 
     .main-contant h1 {
