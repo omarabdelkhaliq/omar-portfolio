@@ -170,8 +170,7 @@ main {
     padding: 40px 40px;
     color: white;
 }
-.project-cards,
-.see-more-project {
+.project-cards {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -183,47 +182,27 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    padding: 0 30px;
+    padding: 0 20px;
     transform: translateY(-15px);
     
     transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.5s ease,
-                transform 0.5s ease,
-                padding 0.5s ease;
+                opacity 0.4s ease-in-out,
+                transform 0.4s ease-in-out,
+                padding 0.5s ease-in-out;
 }
 
 .see-more-project.show {
-    max-height: 1000px; 
+    max-height: 450px; 
     opacity: 1;
     padding: 30px 30px;
     transform: translateY(0);
 }
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);      
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0); 
-    }
-}
-.see-more-project.hide {
-    animation: fadeOut .5s ease forwards;
-}
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-}
+
 .card-p {
     background-color: var(--main-color);
     border-radius: 16px; 
@@ -303,6 +282,20 @@ main {
 .more-project button:hover {
     background-color: var(--main-color);
     transform: translateY(-4px);
+}
+/* 1. جعل الكروت مخفية ومرفوعة لفوق شوية وهي مقفولة */
+.see-more-project .card-p {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* 2. ظهور الكروت بنعومة عند إضافة كلاس show */
+.see-more-project.show .card-p {
+    opacity: 1;
+    transform: translateY(0);
+    /* تأخير بسيط ليظهر الأنيميشن بعد ما الـ container يبدأ يفتح */
+    transition-delay: 0.2s; 
 }
 /* end projects */
 /* start tech */
